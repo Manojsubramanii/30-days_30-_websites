@@ -41,5 +41,5 @@ All images are locally stored in the project directory, including:
 3. Open `index.html` in any browser to view the site.
 
 ```bash
-git clone https://github.com/your-username/flipkart-clone.git
+git clone https://github.com/Manojsubramanii/30-days_30-_websites.git
 
