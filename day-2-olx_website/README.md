@@ -28,7 +28,7 @@ This is a basic clone of the OLX website, built for practice and learning purpos
 
 ### 🏠 Homepage
 
-![Homepage Screenshot](assets/screenshot-home.png)
+![Homepage Screenshot]("assets/Screenshot-footer.png")
 
 ### 📄 Product Page
 
