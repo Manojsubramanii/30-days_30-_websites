@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CRUD with JSONPlaceholder Demo API</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+  input, button { width: 100%; margin: 5px 0; padding: 10px; font-size: 16px; }
+  button { background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; }
+  button:hover { background-color: #218838; }
+  #output { background: #f4f4f4; padding: 15px; margin-top: 15px; white-space: pre-wrap; border-radius: 5px; }
+</style>
+</head>
+<body>
+
+
+
+<h3>Create User </h3>
+<input id="postName" placeholder="Name" value="John Doe" />
+<input id="postEmail" placeholder="Email" value="john@example.com" />
+<button onclick="createUser()">Create User</button>
+
+<h3>Get User </h3>
+<input id="getId" placeholder="User ID (1-10)" />
+<button onclick="getUser()">Get User</button>
+
+<h3>Update User </h3>
+<input id="putId" placeholder="User ID to update (1-10)" />
+<input id="putName" placeholder="New Name" value="Jane Smith" />
+<input id="putEmail" placeholder="New Email" value="jane@example.com" />
+<button onclick="updateUser()">Update User</button>
+
+<h3>Delete User</h3>
+<input id="deleteId" placeholder="User ID to delete (1-10)" />
+<button onclick="deleteUser()">Delete User</button>
+
+<div id="output">Results will appear here...</div>
+
+<script>
+  const baseUrl = 'https://jsonplaceholder.typicode.com/users';
+  const output = document.getElementById('output');
+
+  async function createUser() {
+    const name = document.getElementById('postName').value;
+    const email = document.getElementById('postEmail').value;
+    try {
+      const res = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+      const data = await res.json();
+      output.textContent = 'Created User:\n' + JSON.stringify(data, null, 2);
+    } catch (e) {
+      output.textContent = 'Error:\n' + e;
+    }
+  }
+
+  async function getUser() {
+    const id = document.getElementById('getId').value.trim();
+    if (!id) {
+      output.textContent = 'Please enter a user ID (1-10)';
+      return;
+    }
+    try {
+      const res = await fetch(`${baseUrl}/${id}`);
+      if (!res.ok) throw new Error('User not found');
+      const data = await res.json();
+      output.textContent = 'User Data:\n' + JSON.stringify(data, null, 2);
+    } catch (e) {
+      output.textContent = 'Error:\n' + e;
+    }
+  }
+
+  async function updateUser() {
+    const id = document.getElementById('putId').value.trim();
+    const name = document.getElementById('putName').value;
+    const email = document.getElementById('putEmail').value;
+    if (!id) {
+      output.textContent = 'Please enter a user ID to update';
+      return;
+    }
+    try {
+      const res = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+      const data = await res.json();
+      output.textContent = 'Updated User:\n' + JSON.stringify(data, null, 2);
+    } catch (e) {
+      output.textContent = 'Error:\n' + e;
+    }
+  }
+
+  async function deleteUser() {
+    const id = document.getElementById('deleteId').value.trim();
+    if (!id) {
+      output.textContent = 'Please enter a user ID to delete';
+      return;
+    }
+    try {
+      const res = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        output.textContent = `Deleted user with ID: ${id}`;
+      } else {
+        output.textContent = `Failed to delete user with status: ${res.status}`;
+      }
+    } catch (e) {
+      output.textContent = 'Error:\n' + e;
+    }
+  }
+</script>
+
+</body>
+</html>

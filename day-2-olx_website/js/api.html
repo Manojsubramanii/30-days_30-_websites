@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login with API Users + Fixed Password</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<input type="text" id="username" placeholder="Username"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+
+<p id="result"></p>
+
+<script>
+  let users = [];
+
+  // Fetch users from public API on page load
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => {
+      users = data; // Save users to variable
+      console.log('Users loaded:', users);
+    })
+    .catch(err => {
+      console.error('Failed to load users:', err);
+      document.getElementById('result').textContent = 'Failed to load user data.';
+    });
+
+  function login() {
+    const usernameInput = document.getElementById('username').value.trim();
+    const passwordInput = document.getElementById('password').value;
+    const result = document.getElementById('result');
+
+    if (!usernameInput || !passwordInput) {
+      result.style.color = 'red';
+      result.textContent = 'Please enter both username and password.';
+      return;
+    }
+
+    // Find user by username (case sensitive)
+    const user = users.find(u => u.username === usernameInput);
+
+    if (!user) {
+      result.style.color = 'red';
+      result.textContent = 'Login failed: Username not found.';
+      return;
+    }
+
+    // Fixed password check (all users have password '1234')
+    if (passwordInput === '1234') {
+      result.style.color = 'green';
+      result.textContent = `Login successful! Welcome, ${user.name}.`;
+    } else {
+      result.style.color = 'red';
+      result.textContent = 'Login failed: Incorrect password.';
+    }
+  }
+</script>
+
+</body>
+</html>
