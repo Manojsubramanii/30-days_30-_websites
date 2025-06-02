@@ -27,12 +27,11 @@ This is a basic clone of the OLX website, built for practice and learning purpos
 ## 📸 Screenshots
 
 ### 🏠 Homepage
-
-![Homepage Screenshot]("assets/Screenshot-footer.png")
+![Footerpage Screenshot](assets/Screenshot-homepage.png)
 
 ### 📄 Product Page
 
-![Product Page Screenshot](assets/screenshot-product.png)
+![Footerpage Screenshot](assets/Screenshot-footer.png)
 
 ---
 
